@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret-key: naturedex_super_secure_jwt_secret_2025!
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: auth-service
+              uri: http://localhost:8081
+              predicates:
+                - Path=/auth/**
+
+            - id: user-service
+              uri: http://localhost:8082
+              predicates:
+                - Path=/api/users/**
+
+      #        - id: creature-service
+      #          uri: http://localhost:8082
+      #          predicates:
+      #            - Path=/api/creatures/**
+
+      default-filters:
+        - AddRequestHeader=X-Gateway, Naturedex-Gateway
+        - RemoveRequestHeader=Cookie
