@@ -2,10 +2,16 @@ spring:
   application:
     name: auth-service
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret-key: naturedex_super_secure_jwt_secret_2025!
+
   datasource:
-    url: jdbc:mysql://localhost:3306/auth_db?createDatabaseIfNotExist=true&serverTimezone=UTC
-    username: root
-    password: password
+    url: jdbc:mysql://naturedex-db:3306/naturedex?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: natureuser
+    password: naturepass
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -13,6 +19,7 @@ spring:
       ddl-auto: update
     show-sql: true
     properties:
+      hibernate: org.hibernate.dialect.MySQLDialect
       format_sql: true
     database: mysql
 
@@ -23,4 +30,10 @@ jwt:
   secret: naturedex_super_secure_jwt_secret_2025!
   expiration: 86400000  # 1 dzie? w milisekundach (24h)
 
+depends_on:
+  - naturedex-db
 
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG

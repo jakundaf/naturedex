@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: observation-service
+
+  datasource:
+    url: jdbc:mysql://naturedex-db:3306/naturedex?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: natureuser
+    password: naturepass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate: org.hibernate.dialect.MySQLDialect
+      format_sql: true
+    database: mysql
+
+server:
+  port: 8083
+
+jwt:
+  secret: naturedex_super_secure_jwt_secret_2025!

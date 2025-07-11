@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/naturedex_user_service_db
-    username: root
-    password: password
+    url: jdbc:mysql://naturedex-db:3306/naturedex?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: natureuser
+    password: naturepass
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -20,4 +20,16 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          secret-key: naturedex_super_secure_jwt_secret_2025!
+          secret-key: naaturedex_super_secure_jwt_secret_2025!
+
+jwt:
+  secret: naturedex_super_secure_jwt_secret_2025!
+  expiration: 86400000
+
+depends_on:
+  - naturedex-db
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG

@@ -5,9 +5,13 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,4 +65,21 @@ public class JwtTokenProvider {
             return false;
         }
     }
+
+    public Authentication getAuthentication(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        String username = (String) claims.get("username");
+        String email = claims.getSubject();
+
+        // Użytkownik z pustą listą ról
+        User principal = new User(username, "", Collections.emptyList());
+
+        return new UsernamePasswordAuthenticationToken(principal, token, principal.getAuthorities());
+    }
+
 }

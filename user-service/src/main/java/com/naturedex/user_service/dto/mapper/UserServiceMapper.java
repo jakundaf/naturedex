@@ -11,7 +11,6 @@ public class UserServiceMapper {
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .avatarUrl(user.getAvatarUrl())
-                .keycloakUuid(user.getKeycloakUuid())
                 .build();
     }
 
