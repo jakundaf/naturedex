@@ -13,7 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class GetUserResponse {
 
-    private UUID keycloakUuid;
     private String username;
     private String email;
     private String avatarUrl;

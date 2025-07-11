@@ -13,6 +13,7 @@
         <module>auth-service</module>
         <module>user-service</module>
         <module>api_gateway</module>
+        <module>observation-service</module>
     </modules>
 
     <properties>

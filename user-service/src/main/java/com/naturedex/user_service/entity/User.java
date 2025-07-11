@@ -19,9 +19,6 @@ import java.util.UUID;
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        @Column(nullable = false, unique = true)
-        private UUID keycloakUuid;
-
         @Column(nullable = false)
         private String username;
 
@@ -33,6 +30,5 @@ import java.util.UUID;
 
         private LocalDateTime lastLoginAt;
 
-        // Możesz dodać kolejne pola jak "rola", "lokalizacja", itd.
     }
 
