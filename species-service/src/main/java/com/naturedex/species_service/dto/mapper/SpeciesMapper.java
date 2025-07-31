@@ -3,9 +3,12 @@ package com.naturedex.species_service.dto.mapper;
 import com.naturedex.species_service.dto.SpeciesResponse;
 import com.naturedex.species_service.entity.Species;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SpeciesMapper {
 
-    public static SpeciesResponse mapEntityToSpeciesResponse(Species species){
+    public static SpeciesResponse mapEntityToSpeciesResponse(Species species) {
 
         return SpeciesResponse.builder()
                 .id(species.getId())
@@ -19,4 +22,17 @@ public class SpeciesMapper {
                 .build();
 
     }
+
+    public static List<SpeciesResponse> mapListOfEntitesToListOfSpeciesResponse(List<Species> list) {
+
+        List<SpeciesResponse> dtoList = new ArrayList<>();
+
+        for (Species s : list) {
+            dtoList.add(mapEntityToSpeciesResponse(s));
+        }
+
+        return dtoList;
+
+    }
+
 }

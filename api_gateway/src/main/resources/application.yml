@@ -34,8 +34,7 @@ spring:
             - id: species-service
               uri: http://species-service:8084
               predicates:
-                - Path=/api/species/**
-
+                - Path=/api/species, /api/species/**
 
       default-filters:
         - AddRequestHeader=X-Gateway, Naturedex-Gateway

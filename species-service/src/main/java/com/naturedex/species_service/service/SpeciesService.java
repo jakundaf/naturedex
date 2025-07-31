@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.naturedex.species_service.dto.mapper.SpeciesMapper.mapListOfEntitesToListOfSpeciesResponse;
+
 @Service
 @RequiredArgsConstructor
 public class SpeciesService {
@@ -24,8 +26,8 @@ public class SpeciesService {
     private final SpeciesRepository speciesRepository;
     private final DiscoveredSpeciesRepository discoveredSpeciesRepository;
 
-    public List<Species> getAllSpecies() {
-        return speciesRepository.findAll();
+    public List<SpeciesResponse> getAllSpecies() {
+        return mapListOfEntitesToListOfSpeciesResponse(speciesRepository.findAll());
     }
 
     public List<DiscoveredSpecies> getDiscoveredSpecies(Jwt jwt) {

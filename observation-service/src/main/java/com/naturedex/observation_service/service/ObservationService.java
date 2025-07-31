@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.naturedex.observation_service.dto.mapper.ObservationMapper.mapEntityToDtoResponse;
 
@@ -26,6 +27,7 @@ public class ObservationService {
     public ObservationResponse createObservation(ObservationRequest request, Jwt jwt) {
 
         String username = jwt.getClaim("username");
+        UUID userId = jwt.getClaim("id");
 
         Observation observation = Observation.builder()
                 .imageUrl(request.getImageUrl())
@@ -33,8 +35,8 @@ public class ObservationService {
                 .longitude(request.getLongitude())
                 .observedAt(request.getObservedAt())
                 .status(ObservationStatus.UNRECOGNIZED)
-                .speciesName(null)
-                .username(username)
+                .speciesId(null)
+                .userId(userId)
                 .build();
 
         observationRepository.save(observation);

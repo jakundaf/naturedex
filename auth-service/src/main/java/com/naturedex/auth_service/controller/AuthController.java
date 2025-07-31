@@ -20,7 +20,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<com.naturedex.auth_service.dto.LoginResponse> login (@RequestBody LoginRequest request){
+    public ResponseEntity<LoginResponse> login (@RequestBody LoginRequest request){
         return ResponseEntity.ok(authService.login(request));
     }
 
