@@ -22,7 +22,7 @@ public class DiscoveredSpecies {
     private Long id;
 
     @Column(name = "user_id", nullable = false)
-    private UUID userId;
+    private String userId;
 
     @Column(name = "species_id", nullable = false)
     private Long speciesId;

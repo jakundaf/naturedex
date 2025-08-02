@@ -27,7 +27,7 @@ public class JwtTokenProvider {
         this.expirationMillis = expirationMillis;
     }
 
-    public String generateToken(String email, String username, UUID id){
+    public String generateToken(String email, String username, String id){
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expirationMillis);
         Map<String, Object> claims = new HashMap<>();

@@ -15,11 +15,10 @@ import java.util.UUID;
 @Builder
 public class ObservationResponse {
 
-    private UUID id;
+    private Long id;
     private String imageUrl;
     private Double latitude;
     private Double longitude;
     private LocalDateTime observedAt;
     private ObservationStatus status;
-    private String speciesName;
 }

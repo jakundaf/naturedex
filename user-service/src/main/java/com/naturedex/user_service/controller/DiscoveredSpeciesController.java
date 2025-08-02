@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user/me/discovered")
+@RequestMapping("/api/users/me/discovered")
 @RequiredArgsConstructor
 public class DiscoveredSpeciesController {
 
@@ -24,7 +24,7 @@ public class DiscoveredSpeciesController {
     }
 
     @PostMapping("/{speciesId}")
-    public ResponseEntity<?> discoverSpecies(@PathVariable Long speciesId, @AuthenticationPrincipal Jwt jwt){
+    public ResponseEntity<String> discoverSpecies(@PathVariable Long speciesId, @AuthenticationPrincipal Jwt jwt){
         return new ResponseEntity<>(discoveredSpeciesService.discover(jwt, speciesId), HttpStatus.OK);
     }
 

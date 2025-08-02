@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-species-table
+      author: naturedex
+      changes:
+        - createTable:
+            tableName: species
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: latin_name
+                  type: VARCHAR(255)
+              - column:
+                  name: image_url
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(1000)
+              - column:
+                  name: habitat
+                  type: VARCHAR(255)
+              - column:
+                  name: category
+                  type: VARCHAR(50)
+              - column:
+                  name: is_visible
+                  type: BOOLEAN

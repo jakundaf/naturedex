@@ -17,20 +17,16 @@ public class DiscoveredSpeciesService {
 
     private final DiscoveredSpeciesRepository discoveredSpeciesRepository;
 
-    public List<DiscoveredSpecies> getDiscoveredSpecies(@AuthenticationPrincipal Jwt jwt){
-        UUID userId = jwt.getClaim("id");
+    public List<DiscoveredSpecies> getDiscoveredSpecies(@AuthenticationPrincipal Jwt jwt) {
+        String userId = jwt.getClaim("id");
 
         return discoveredSpeciesRepository.findAllByUserId(userId);
     }
 
-    public boolean hasDiscovered(UUID userId, Long speciesId){
-        return discoveredSpeciesRepository.existsByUserIdAndSpeciesId(userId, speciesId);
-    }
+    public String discover(@AuthenticationPrincipal Jwt jwt, Long speciesId) {
+        String userId = jwt.getClaim("id");
 
-    public DiscoveredSpecies discover(@AuthenticationPrincipal Jwt jwt, Long speciesId){
-        UUID userId = jwt.getClaim("id");
-
-        if (discoveredSpeciesRepository.existsByUserIdAndSpeciesId(userId, speciesId)){
+        if (discoveredSpeciesRepository.existsByUserIdAndSpeciesId(userId, speciesId)) {
             throw new IllegalStateException("Species already discovered by this user.");
         }
 
@@ -40,6 +36,8 @@ public class DiscoveredSpeciesService {
                 .discoveredAt(LocalDateTime.now())
                 .build();
 
-        return discoveredSpeciesRepository.save(discovered);
+        discoveredSpeciesRepository.save(discovered);
+
+        return "Species with id '" + speciesId + "' has been discovered for user with id '" + userId + "'.";
     }
 }

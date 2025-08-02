@@ -2,6 +2,10 @@ spring:
   application:
     name: species-service
 
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
   datasource:
     url: jdbc:mysql://naturedex-db:3306/naturedex?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: natureuser
@@ -28,3 +32,5 @@ logging:
     org.springframework.security: DEBUG
     org.springframework.web: DEBUG
 
+user-service:
+  url: http://localhost:8082

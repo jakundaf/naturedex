@@ -1,19 +1,15 @@
 package com.naturedex.species_service.service;
 
 
-import com.naturedex.species_service.dto.DiscoveredSpeciesResponse;
+import com.naturedex.species_service.client.UserServiceClient;
+import com.naturedex.species_service.dto.SpeciesCatalogEntry;
 import com.naturedex.species_service.dto.SpeciesResponse;
-import com.naturedex.species_service.dto.mapper.SpeciesMapper;
-import com.naturedex.species_service.entity.DiscoveredSpecies;
 import com.naturedex.species_service.entity.Species;
-import com.naturedex.species_service.exception.SpeciesNotFoundException;
-import com.naturedex.species_service.repository.DiscoveredSpeciesRepository;
 import com.naturedex.species_service.repository.SpeciesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.naturedex.species_service.dto.mapper.SpeciesMapper.mapListOfEntitesToListOfSpeciesResponse;
@@ -24,50 +20,29 @@ public class SpeciesService {
 
 
     private final SpeciesRepository speciesRepository;
-    private final DiscoveredSpeciesRepository discoveredSpeciesRepository;
+    private final UserServiceClient userServiceClient;
 
     public List<SpeciesResponse> getAllSpecies() {
         return mapListOfEntitesToListOfSpeciesResponse(speciesRepository.findAll());
     }
 
-    public List<DiscoveredSpecies> getDiscoveredSpecies(Jwt jwt) {
-        String username = jwt.getClaim("username");
+    public List<SpeciesCatalogEntry> getSpeciesCatalog(Jwt jwt){
+        String token = jwt.getTokenValue();
+        List<Species> allSpecies = speciesRepository.findAll();
+        List<Long> discoveredIds = userServiceClient.getDiscoveredSpecies(token);
 
-        return discoveredSpeciesRepository.findByUsername(username);
+        return allSpecies.stream()
+                .map(species -> new SpeciesCatalogEntry(
+                        species.getId(),
+                        species.getName(),
+                        species.getLatinName(),
+                        species.getImageUrl(),
+                        species.getCategory().name(),
+                        species.getDescription(),
+                        species.getHabitat(),
+                        discoveredIds.contains(species.getId())
+                ))
+                .toList();
     }
 
-    public DiscoveredSpeciesResponse markAsDiscovered(Long speciesId, Jwt jwt) {
-
-        String username = jwt.getClaim("username");
-        Species species = speciesRepository.findById(speciesId)
-                .orElseThrow(() -> new SpeciesNotFoundException("No species with id: " + speciesId + " found."));
-
-        boolean alreadyDiscovered = discoveredSpeciesRepository.existsByUsernameAndSpecies(username, species);
-        if (!alreadyDiscovered) {
-            discoveredSpeciesRepository.save(DiscoveredSpecies.builder()
-                    .username(username)
-                    .discoveredAt(LocalDateTime.now())
-                    .species(species)
-                    .build());
-
-            SpeciesResponse speciesResponse = SpeciesMapper.mapEntityToSpeciesResponse(species);
-
-            return DiscoveredSpeciesResponse.builder()
-                    .id(speciesId)
-                    .speciesResponse(speciesResponse)
-                    .discoveredAt(LocalDateTime.now())
-                    .username(username)
-                    .build();
-        }
-
-        SpeciesResponse speciesResponse = SpeciesMapper.mapEntityToSpeciesResponse(species);
-
-        return DiscoveredSpeciesResponse.builder()
-                .id(speciesId)
-                .speciesResponse(speciesResponse)
-                .discoveredAt(LocalDateTime.now())
-                .username(username)
-                .build();
-
-    }
 }

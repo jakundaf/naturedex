@@ -8,8 +8,8 @@ import java.util.UUID;
 
 public interface DiscoveredSpeciesRepository extends JpaRepository <DiscoveredSpecies, Long> {
 
-    List<DiscoveredSpecies> findAllByUserId(UUID userId);
+    List<DiscoveredSpecies> findAllByUserId(String userId);
 
-    boolean existsByUserIdAndSpeciesId(UUID userId, Long speciesId);
+    boolean existsByUserIdAndSpeciesId(String userId, Long speciesId);
 
 }

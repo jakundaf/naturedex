@@ -35,6 +35,6 @@ public class Observation {
     private Long speciesId;
 
     @Column(nullable = false)
-    private UUID userId;
+    private String userId;
 
 }

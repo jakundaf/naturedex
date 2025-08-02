@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -55,8 +56,9 @@ public class AuthService {
             throw new UserAlreadyExistsException("User with passed email already exists.");
         }
 
-        User user = User.builder().
-                email(request.getEmail())
+        User user = User.builder()
+                .id(UUID.randomUUID().toString())
+                .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .username(request.getUsername())
                 .createdAt(LocalDate.now())

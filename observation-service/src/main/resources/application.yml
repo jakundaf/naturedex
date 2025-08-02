@@ -22,3 +22,6 @@ server:
 
 jwt:
   secret: naturedex_super_secure_jwt_secret_2025!
+
+user-service:
+  url: http://localhost:8082
