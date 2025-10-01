@@ -24,8 +24,8 @@ jobs:
           java-version: '21'
           cache: 'maven'
 
-      - name: Build & test (skip IT for now)
-        run: mvn -B -DskipITs verify
+      - name: Build & test (H2 profile)
+        run: mvn -B -Dspring.profiles.active=test -DskipITs verify
 
       - name: Upload surefire reports (artefakt)
         if: always()
