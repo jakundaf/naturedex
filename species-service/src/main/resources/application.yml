@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: species-service
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+  datasource:
+    url: jdbc:mysql://naturedex-db:3306/naturedex?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: natureuser
+    password: naturepass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate: org.hibernate.dialect.MySQLDialect
+      format_sql: true
+    database: mysql
+
+server:
+  port: 8084
+
+jwt:
+  secret: naturedex_super_secure_jwt_secret_2025!
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+
+user-service:
+  url: http://localhost:8082

@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static com.naturedex.user_service.dto.mapper.UserServiceMapper.mapUserEntityToGetUserResponse;
 
@@ -37,6 +38,7 @@ public class UserService {
                 })
                 .orElseGet(() -> {
                     User newUser = User.builder()
+                            .id(UUID.randomUUID().toString())
                             .username(username)
                             .email(email)
                             .createdAt(LocalDateTime.now())
@@ -58,7 +60,10 @@ public class UserService {
 
     public void createUser(Jwt jwt, CreateUserRequest request) {
 
+        String id = jwt.getClaim("id");
+
         User user = User.builder()
+                .id(id)
                 .email(request.getEmail())
                 .username(request.getUsername())
                 .createdAt(LocalDateTime.now())

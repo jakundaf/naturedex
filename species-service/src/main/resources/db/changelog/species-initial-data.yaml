@@ -1,0 +1,115 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-initial-species
+      author: naturedex
+      changes:
+
+        - insert:
+            tableName: species
+            columns:
+              - column: { name: name, value: "Biedronka siedmiokropka" }
+              - column: { name: latin_name, value: "Coccinella septempunctata" }
+              - column: { name: image_url, value: "biedronka.jpg" }
+              - column: { name: description, value: "Popularna biedronka o 7 kropkach, naturalny drapieżnik mszyc." }
+              - column: { name: habitat, value: "Ogrody, łąki" }
+              - column: { name: category, value: "ANIMAL" }
+              - column: { name: is_visible, valueBoolean: true }
+
+        - insert:
+            tableName: species
+            columns:
+              - column: { name: name, value: "Paź królowej" }
+              - column: { name: latin_name, value: "Papilio machaon" }
+              - column: { name: image_url, value: "paz_krolowej.jpg" }
+              - column: { name: description, value: "Duży żółto-czarny motyl z niebieskimi plamkami." }
+              - column: { name: habitat, value: "Łąki, pola" }
+              - column: { name: category, value: "ANIMAL" }
+              - column: { name: is_visible, valueBoolean: true }
+
+        - insert:
+            tableName: species
+            columns:
+              - column: { name: name, value: "Komar domowy" }
+              - column: { name: latin_name, value: "Culex pipiens" }
+              - column: { name: image_url, value: "komar.jpg" }
+              - column: { name: description, value: "Znany owad ssący krew, szczególnie aktywny wieczorami." }
+              - column: { name: habitat, value: "Woda stojąca" }
+              - column: { name: category, value: "ANIMAL" }
+              - column: { name: is_visible, valueBoolean: true }
+
+        - insert:
+            tableName: species
+            columns:
+              - column: { name: name, value: "Pszczoła miodna" }
+              - column: { name: latin_name, value: "Apis mellifera" }
+              - column: { name: image_url, value: "pszczola.jpg" }
+              - column: { name: description, value: "Najważniejszy zapylacz roślin w ekosystemie." }
+              - column: { name: habitat, value: "Sady, ogrody" }
+              - column: { name: category, value: "ANIMAL" }
+              - column: { name: is_visible, valueBoolean: true }
+
+        - insert:
+            tableName: species
+            columns:
+              - column: { name: name, value: "Trzmiel ziemny" }
+              - column: { name: latin_name, value: "Bombus terrestris" }
+              - column: { name: image_url, value: "trzmiel.jpg" }
+              - column: { name: description, value: "Puchaty, duży kuzyn pszczoły, również zapylacz." }
+              - column: { name: habitat, value: "Łąki, ogrody" }
+              - column: { name: category, value: "ANIMAL" }
+              - column: { name: is_visible, valueBoolean: true }
+
+        - insert:
+            tableName: species
+            columns:
+              - column: { name: name, value: "Mrówka rudnica" }
+              - column: { name: latin_name, value: "Formica rufa" }
+              - column: { name: image_url, value: "mrowka.jpg" }
+              - column: { name: description, value: "Agresywna mrówka budująca duże kopce z igliwia." }
+              - column: { name: habitat, value: "Las liściasty" }
+              - column: { name: category, value: "ANIMAL" }
+              - column: { name: is_visible, valueBoolean: true }
+
+        - insert:
+            tableName: species
+            columns:
+              - column: { name: name, value: "Ważka czerwona" }
+              - column: { name: latin_name, value: "Sympetrum sanguineum" }
+              - column: { name: image_url, value: "wazka.jpg" }
+              - column: { name: description, value: "Czerwona ważka – zwinna, drapieżna." }
+              - column: { name: habitat, value: "Zbiorniki wodne" }
+              - column: { name: category, value: "ANIMAL" }
+              - column: { name: is_visible, valueBoolean: true }
+
+        - insert:
+            tableName: species
+            columns:
+              - column: { name: name, value: "Konik polny" }
+              - column: { name: latin_name, value: "Chorthippus brunneus" }
+              - column: { name: image_url, value: "konik.jpg" }
+              - column: { name: description, value: "Skaczący owad, znany z charakterystycznych dźwięków." }
+              - column: { name: habitat, value: "Łąki" }
+              - column: { name: category, value: "ANIMAL" }
+              - column: { name: is_visible, valueBoolean: true }
+
+        - insert:
+            tableName: species
+            columns:
+              - column: { name: name, value: "Mucha domowa" }
+              - column: { name: latin_name, value: "Musca domestica" }
+              - column: { name: image_url, value: "mucha.jpg" }
+              - column: { name: description, value: "Pospolita mucha, często spotykana w pobliżu ludzi." }
+              - column: { name: habitat, value: "Domy, śmietniki" }
+              - column: { name: category, value: "ANIMAL" }
+              - column: { name: is_visible, valueBoolean: true }
+
+        - insert:
+            tableName: species
+            columns:
+              - column: { name: name, value: "Żuk gnojowy" }
+              - column: { name: latin_name, value: "Geotrupes stercorarius" }
+              - column: { name: image_url, value: "zuk.jpg" }
+              - column: { name: description, value: "Ciemny owad toczący kulki z odchodów." }
+              - column: { name: habitat, value: "Las, pola" }
+              - column: { name: category, value: "ANIMAL" }
+              - column: { name: is_visible, valueBoolean: true }

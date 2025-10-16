@@ -9,12 +9,12 @@ public class ObservationMapper {
     public static ObservationResponse mapEntityToDtoResponse(Observation observation) {
 
         return ObservationResponse.builder()
+                .id(observation.getId())
                 .imageUrl(observation.getImageUrl())
                 .latitude(observation.getLatitude())
                 .longitude(observation.getLongitude())
                 .observedAt(observation.getObservedAt())
                 .status(observation.getStatus())
-                .speciesName(observation.getSpeciesName())
                 .build();
 
     }

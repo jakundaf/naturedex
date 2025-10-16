@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -20,5 +21,4 @@ public class ObservationResponse {
     private Double longitude;
     private LocalDateTime observedAt;
     private ObservationStatus status;
-    private String speciesName;
 }

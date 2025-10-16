@@ -48,6 +48,14 @@ services:
     networks:
       - naturedex-net
 
+  species-service:
+    build: ./species-service
+    container_name: species-service
+    ports:
+      - "8084:8084"
+    networks:
+      - naturedex-net
+
 networks:
   naturedex-net:
     driver: bridge

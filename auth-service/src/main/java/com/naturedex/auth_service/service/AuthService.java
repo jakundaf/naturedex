@@ -6,7 +6,7 @@ import com.naturedex.auth_service.dto.RegisterRequest;
 import com.naturedex.auth_service.entity.User;
 import com.naturedex.auth_service.exception.UserAlreadyExistsException;
 import com.naturedex.auth_service.exception.UserNotFoundException;
-import com.naturedex.auth_service.repository.UserRepository;
+import com.naturedex.auth_service.repository.AuthRepository;
 import com.naturedex.auth_service.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -18,12 +18,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
     private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
+    private final AuthRepository authRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
@@ -32,14 +33,14 @@ public class AuthService {
     }
 
     public LoginResponse login(LoginRequest request) {
-        User user = userRepository.findByEmail(request.getEmail())
+        User user = authRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UserNotFoundException("User not found. Wrong username or password"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new UserNotFoundException("User not found. Wrong username or password");
+            throw new UserNotFoundException("Wrong password.");
         }
 
-        String token = jwtTokenProvider.generateToken(user.getEmail(), user.getUsername());
+        String token = jwtTokenProvider.generateToken(user.getEmail(), user.getUsername(), user.getId());
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -51,20 +52,21 @@ public class AuthService {
     }
 
     public LoginResponse register(RegisterRequest request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
+        if (authRepository.existsByEmail(request.getEmail())) {
             throw new UserAlreadyExistsException("User with passed email already exists.");
         }
 
-        User user = User.builder().
-                email(request.getEmail())
+        User user = User.builder()
+                .id(UUID.randomUUID().toString())
+                .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .username(request.getUsername())
                 .createdAt(LocalDate.now())
                 .build();
 
-        userRepository.save(user);
+        authRepository.save(user);
 
-        String token = jwtTokenProvider.generateToken(user.getEmail(), user.getUsername());
+        String token = jwtTokenProvider.generateToken(user.getEmail(), user.getUsername(), user.getId());
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

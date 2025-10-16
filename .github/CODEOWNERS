@@ -1,0 +1,7 @@
+# Domyślny właściciel
+* @jakundaf
+
+# Właściciele konkretnych modułów
+/api-gateway/**   @jakundaf
+/species-service/**  @jakundaf
+/auth-service/**  @jakundaf

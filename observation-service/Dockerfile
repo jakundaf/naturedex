@@ -5,4 +5,5 @@ COPY wait-for-it.sh wait-for-it.sh
 RUN apk add --no-cache bash
 RUN chmod +x wait-for-it.sh
 EXPOSE 8083
-ENTRYPOINT ["sh", "-c", "./wait-for-it.sh naturedex-db:3306 --timeout=60 --strict -- java -jar app.jar"]
+ENTRYPOINT ["./wait-for-it.sh", "naturedex-db:3306", "--timeout=60", "--strict", "--", "java", "-jar", "app.jar"]
+

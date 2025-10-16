@@ -1,0 +1,6 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/create-species-table.yaml
+
+  - include:
+      file: db/changelog/species-initial-data.yaml

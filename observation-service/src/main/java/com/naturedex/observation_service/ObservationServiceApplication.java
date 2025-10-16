@@ -10,4 +10,7 @@ public class ObservationServiceApplication {
         SpringApplication.run(ObservationServiceApplication.class, args);
     }
 
+
+
+
 }

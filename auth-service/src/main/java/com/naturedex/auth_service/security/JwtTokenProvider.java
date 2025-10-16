@@ -11,10 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class JwtTokenProvider {
@@ -30,11 +27,12 @@ public class JwtTokenProvider {
         this.expirationMillis = expirationMillis;
     }
 
-    public String generateToken(String email, String username){
+    public String generateToken(String email, String username, String id){
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expirationMillis);
         Map<String, Object> claims = new HashMap<>();
         claims.put("username", username);
+        claims.put("id", id);
 
 
         return Jwts.builder()
@@ -58,7 +56,6 @@ public class JwtTokenProvider {
     public boolean validateToken(String token){
 
         try {
-
             Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e){
