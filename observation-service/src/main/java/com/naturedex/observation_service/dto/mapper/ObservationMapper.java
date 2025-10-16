@@ -10,7 +10,6 @@ public class ObservationMapper {
 
         return ObservationResponse.builder()
                 .id(observation.getId())
-                .imageUrl(observation.getImageUrl())
                 .latitude(observation.getLatitude())
                 .longitude(observation.getLongitude())
                 .observedAt(observation.getObservedAt())

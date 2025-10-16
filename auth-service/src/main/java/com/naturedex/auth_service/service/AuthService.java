@@ -42,11 +42,11 @@ public class AuthService {
 
         String token = jwtTokenProvider.generateToken(user.getEmail(), user.getUsername(), user.getId());
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(token);
-
-        HttpEntity<LoginRequest> entity = new HttpEntity<>(request, headers);
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        headers.setBearerAuth(token);
+//
+//        HttpEntity<LoginRequest> entity = new HttpEntity<>(request, headers);
 
         return new LoginResponse(token);
     }

@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Builder
 public class ObservationRequest {
 
-    private String imageUrl;
     private Double latitude;
     private Double longitude;
     private LocalDateTime observedAt;

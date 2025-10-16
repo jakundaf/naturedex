@@ -16,7 +16,6 @@ import java.util.UUID;
 public class ObservationResponse {
 
     private Long id;
-    private String imageUrl;
     private Double latitude;
     private Double longitude;
     private LocalDateTime observedAt;

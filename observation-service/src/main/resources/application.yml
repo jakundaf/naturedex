@@ -24,4 +24,22 @@ jwt:
   secret: naturedex_super_secure_jwt_secret_2025!
 
 user-service:
-  url: http://localhost:8082
+  url: http://host.docker.internal:8080
+
+app:
+  aws:
+    region: eu-central-1
+    s3:
+      bucket: naturedex-observations-jakundaf
+      key-prefix: user
+      presign-ttl-minutes: 10
+  upload:
+    allowed-content-types: image/jpeg,image/png
+    max-bytes: 10485760
+
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    org.springframework.beans.factory.support: DEBUG
+    org.springframework.context.annotation: DEBUG

@@ -1,7 +1,10 @@
 package com.naturedex.observation_service.utils;
 
 public enum ObservationStatus {
-    UNRECOGNIZED,
-    IN_PROGRESS,
-    RECOGNIZED
+    CREATED,
+    UPLOADED,
+    PROCESSING,
+    RECOGNIZED,
+    REVIEW_REQUIRED,
+    FAILED
 }

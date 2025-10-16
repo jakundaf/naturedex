@@ -33,4 +33,5 @@ logging:
     org.springframework.web: DEBUG
 
 user-service:
-  url: http://localhost:8082
+  url: http://host.docker.internal:8080
+
