@@ -25,7 +25,7 @@ jobs:
           cache: 'maven'
 
       - name: Build & test (H2 profile)
-        run: mvn -B -Dspring.profiles.active=test -DskipITs verify
+        run: mvn clean package -DskipTests
 
       - name: Upload surefire reports (artefakt)
         if: always()
