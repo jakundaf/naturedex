@@ -22,19 +22,27 @@ public class Observation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String imageUrl;
+    private String contentType;
+    private Long fileSizeBytes;
+
 
     private Double latitude;
     private Double longitude;
 
     private LocalDateTime observedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     @Enumerated(EnumType.STRING)
     private ObservationStatus status;
 
     private Long speciesId;
+    private Double confidence;
+    private String recognizer;
 
     @Column(nullable = false)
     private String userId;
+
+    private String objectKey;
 
 }
