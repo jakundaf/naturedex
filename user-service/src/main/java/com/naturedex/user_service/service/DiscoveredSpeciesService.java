@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -17,13 +18,13 @@ public class DiscoveredSpeciesService {
 
     private final DiscoveredSpeciesRepository discoveredSpeciesRepository;
 
-    public List<DiscoveredSpecies> getDiscoveredSpecies(@AuthenticationPrincipal Jwt jwt) {
+    public List<DiscoveredSpecies> getDiscoveredSpecies(Jwt jwt) {
         String userId = jwt.getClaim("id");
 
         return discoveredSpeciesRepository.findAllByUserId(userId);
     }
 
-    public String discover(@AuthenticationPrincipal Jwt jwt, Long speciesId) {
+    public String discover(Jwt jwt, Long speciesId) {
         String userId = jwt.getClaim("id");
 
         if (discoveredSpeciesRepository.existsByUserIdAndSpeciesId(userId, speciesId)) {
@@ -35,6 +36,8 @@ public class DiscoveredSpeciesService {
                 .speciesId(speciesId)
                 .discoveredAt(LocalDateTime.now())
                 .build();
+
+
 
         discoveredSpeciesRepository.save(discovered);
 

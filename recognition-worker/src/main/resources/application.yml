@@ -1,0 +1,20 @@
+spring:
+  kafka:
+    bootstrap-servers: kafka:29092
+    consumer:
+      group-id: recognition
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.value.default.type: com.naturedex.recognition_worker.events.ObservationUploadedEvent
+        spring.json.trusted.packages: "com.naturedex.*"
+        spring.json.use.type.headers: false
+      enable-auto-commit: false
+    listener:
+      ack-mode: MANUAL
+
+recognition:
+  observation-service-base-url: http://observation-service:8083
+
+discovered-species:
+  user-service-base-url: http://user-service:8082

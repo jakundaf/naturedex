@@ -37,6 +37,7 @@ public class Observation {
     private ObservationStatus status;
 
     private Long speciesId;
+    private String species;
     private Double confidence;
     private String recognizer;
 

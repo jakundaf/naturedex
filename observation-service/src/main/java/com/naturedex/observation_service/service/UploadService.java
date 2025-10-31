@@ -3,6 +3,7 @@ package com.naturedex.observation_service.service;
 import com.naturedex.observation_service.dto.PresignedUrlRequest;
 import com.naturedex.observation_service.dto.PresignedUrlResponse;
 import com.naturedex.observation_service.entity.Observation;
+import com.naturedex.observation_service.events.ObservationUploadedEvent;
 import com.naturedex.observation_service.exception.UserNotFoundException;
 import com.naturedex.observation_service.repository.ObservationRepository;
 import com.naturedex.observation_service.utils.ObservationStatus;
@@ -10,6 +11,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -22,6 +24,7 @@ import software.amazon.awssdk.services.s3.presigner.model.PresignedPutObjectRequ
 import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +40,8 @@ public class UploadService {
     private final S3Presigner s3Presigner;
     private final S3Client s3;
     private final ObservationRepository observationRepository;
+    private final KafkaTemplate<String, ObservationUploadedEvent> kafka;
+    private static final String TOPIC = "observation-uploaded";
 
     @Value("${app.aws.s3.bucket}")
     private String bucket;
@@ -69,7 +74,7 @@ public class UploadService {
         // 1) Walidacje wejścia
 
         if (!allowedContentTypes.contains(request.contentType())) {
-            throw new IllegalArgumentException("Unsupported contetType: " + request.contentType());
+            throw new IllegalArgumentException("Unsupported contentType: " + request.contentType());
         }
         if (request.fileSize() == null || request.fileSize() <= 0 || request.fileSize() > maxBytes) {
             throw new IllegalArgumentException("Invalid file size (max " + maxBytes + ")");
@@ -164,5 +169,30 @@ public class UploadService {
         observation.setStatus(ObservationStatus.UPLOADED);
         observation.setUpdatedAt(LocalDateTime.now());
         observationRepository.save(observation);
+
+        ObservationUploadedEvent event = new ObservationUploadedEvent(
+                observation.getId(),
+                observation.getUserId(),
+                observation.getObjectKey(),
+                observation.getContentType(),
+                observation.getFileSizeBytes(),
+                observation.getLatitude(),
+                observation.getLongitude(),
+                observation.getObservedAt(),
+                Instant.now(),
+                jwt.getTokenValue()
+        );
+
+        kafka.send(TOPIC, String.valueOf(observation.getId()), event)
+                .whenComplete((result, ex) -> {
+                    if (ex != null) {
+                        log.error("Kafka send failed: {}", ex.getMessage());
+                    } else {
+                        log.info("Kafka send ok, topic: {}, partition: {}, offset: {}",
+                                result.getRecordMetadata().topic(),
+                                result.getRecordMetadata().partition(),
+                                result.getRecordMetadata().offset());
+                    }
+                });
     }
 }
