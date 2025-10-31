@@ -17,6 +17,17 @@ spring:
       format_sql: true
     database: mysql
 
+  kafka:
+    bootstrap-servers: kafka:29092
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+    properties:
+      enable.idempotence: true
+    template:
+      default-topic: observation-uploaded
+
 server:
   port: 8083
 

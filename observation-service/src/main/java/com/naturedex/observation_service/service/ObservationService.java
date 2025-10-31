@@ -4,16 +4,22 @@ package com.naturedex.observation_service.service;
 import com.naturedex.observation_service.client.UserServiceClient;
 import com.naturedex.observation_service.dto.ObservationRequest;
 import com.naturedex.observation_service.dto.ObservationResponse;
+import com.naturedex.observation_service.dto.UpdateObservationStatusRequest;
 import com.naturedex.observation_service.dto.mapper.ObservationMapper;
 import com.naturedex.observation_service.entity.Observation;
 import com.naturedex.observation_service.exception.ObservationNotFoundException;
 import com.naturedex.observation_service.repository.ObservationRepository;
 import com.naturedex.observation_service.utils.ObservationStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import static com.naturedex.observation_service.dto.mapper.ObservationMapper.mapEntityToDtoResponse;
 
@@ -66,5 +72,18 @@ public class ObservationService {
 
     }
 
+
+    public ResponseEntity<Void> updateObservationStatus(Long id, UpdateObservationStatusRequest body) {
+        var obs = observationRepository.findById(id).orElseThrow();
+        obs.setStatus(ObservationStatus.valueOf(body.getStatus()));
+        obs.setUpdatedAt(LocalDateTime.now());
+
+        obs.setSpecies(body.getSpecies());
+        obs.setConfidence(body.getConfidence());
+        obs.setSpeciesId(body.getSpeciesId());
+
+        observationRepository.save(obs);
+        return ResponseEntity.noContent().build();
+    }
 
 }

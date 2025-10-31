@@ -15,6 +15,7 @@
         <module>api_gateway</module>
         <module>observation-service</module>
         <module>species-service</module>
+        <module>recognition-worker</module>
     </modules>
 
     <properties>

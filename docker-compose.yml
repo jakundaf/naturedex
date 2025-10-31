@@ -46,6 +46,7 @@ services:
     ports:
       - "8083:8083"
     networks:
+      - devnet
       - naturedex-net
     environment:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
@@ -81,6 +82,17 @@ services:
     networks:
       - naturedex-net
 
+  recognition-worker:
+    build: ./recognition-worker
+    container_name: recognition-worker
+    ports:
+      - "8085:8085"
+    networks:
+      - devnet
+      - naturedex-net
+
 networks:
   naturedex-net:
     driver: bridge
+  devnet:
+    external: true

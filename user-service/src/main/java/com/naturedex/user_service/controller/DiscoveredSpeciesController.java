@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users/me/discovered")
@@ -22,6 +23,11 @@ public class DiscoveredSpeciesController {
     public ResponseEntity<List<DiscoveredSpecies>> getMyDiscoveredSpecies(@AuthenticationPrincipal Jwt jwt){
         return new ResponseEntity<>(discoveredSpeciesService.getDiscoveredSpecies(jwt), HttpStatus.OK);
     }
+
+    // TODO
+    // @GetMapping("/{speciesId}")
+    // public ResponseEntity<DiscoveredSpecies> getMySingleDiscoveredSpecies(@AuthenticationPrincipal Jwt jwt
+    // @PathVariable Long speciesId){}
 
     @PostMapping("/{speciesId}")
     public ResponseEntity<String> discoverSpecies(@PathVariable Long speciesId, @AuthenticationPrincipal Jwt jwt){

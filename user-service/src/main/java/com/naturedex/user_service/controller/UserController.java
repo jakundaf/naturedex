@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<GetUserResponse> getUserByUsername(@AuthenticationPrincipal Jwt jwt, String username){
+    public ResponseEntity<GetUserResponse> getUserByUsername(@AuthenticationPrincipal Jwt jwt, @PathVariable String username){
         return new ResponseEntity<>(userService.getUserByUsername(jwt, username), HttpStatus.OK);
     }
 
