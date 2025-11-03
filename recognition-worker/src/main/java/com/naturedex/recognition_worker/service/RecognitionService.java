@@ -1,5 +1,6 @@
 package com.naturedex.recognition_worker.service;
 
+import com.naturedex.recognition_worker.dto.RecognitionResult;
 import com.naturedex.recognition_worker.dto.UpdateObservationStatusRequest;
 import com.naturedex.recognition_worker.events.ObservationUploadedEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+
+import java.time.Instant;
 
 @Slf4j
 @Service
@@ -19,11 +22,27 @@ public class RecognitionService {
     @Value("${discovered-species.user-service-base-url}")
     private String userServiceBaseUrl;
 
-    public record RecognitionResult(String species, double confidence, Long speciesId) {
-    }
+
 
     public RecognitionResult recognize(ObservationUploadedEvent event) {
         return new RecognitionResult("Papilio machaon", 0.93, 1L);
+
+
+
+
+
+//        ObservationUploadedEvent event = new ObservationUploadedEvent(
+//                observation.getId(),
+//                observation.getUserId(),
+//                observation.getObjectKey(),
+//                observation.getContentType(),
+//                observation.getFileSizeBytes(),
+//                observation.getLatitude(),
+//                observation.getLongitude(),
+//                observation.getObservedAt(),
+//                Instant.now(),
+//                jwt.getTokenValue()
+//        );
     }
 
 
